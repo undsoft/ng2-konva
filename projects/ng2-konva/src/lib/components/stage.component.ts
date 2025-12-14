@@ -24,7 +24,7 @@ import { CoreShapeComponent as CoreShape } from './core-shape.component';
 })
 export class StageComponent implements KonvaComponent, OnDestroy {
   private nodeContainer = inject(ElementRef).nativeElement;
-  readonly shapes = contentChildren(CoreShape);
+  readonly shapes = contentChildren(CoreShape, { descendants: true });
 
   public readonly config = input<ContainerConfig>();
   #onConfigChange = effect(() => {
