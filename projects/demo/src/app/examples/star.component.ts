@@ -3,9 +3,10 @@ import Konva from 'konva';
 import { StarConfig } from 'konva/lib/shapes/Star';
 import { StageConfig } from 'konva/lib/Stage';
 import {
-  CoreShapeComponent,
-  NgKonvaEventObject,
-  StageComponent,
+  KonvaCoreShape2,
+  KonvaEvent,
+  KonvaStage,
+  KonvaLayer,
 } from 'ng2-konva';
 
 type ExtStartConfig = StarConfig & { startScale: number };
@@ -30,11 +31,11 @@ type ExtStartConfig = StarConfig & { startScale: number };
       <br />
     </section>
   `,
-  imports: [StageComponent, CoreShapeComponent],
+  imports: [KonvaStage, KonvaLayer, KonvaCoreShape2],
 })
 export class StarExampleComponent implements OnInit {
-  readonly layer = viewChild.required<CoreShapeComponent>('layer');
-  readonly dragLayer = viewChild.required<CoreShapeComponent>('dragLayer');
+  readonly layer = viewChild.required<KonvaCoreShape2>('layer');
+  readonly dragLayer = viewChild.required<KonvaCoreShape2>('dragLayer');
 
   public width = 800;
   public height = 800;
@@ -46,15 +47,9 @@ export class StarExampleComponent implements OnInit {
   };
 
   public handleDragstart(
-    event: NgKonvaEventObject<MouseEvent>,
+    event: KonvaEvent<MouseEvent>,
     config: ExtStartConfig,
   ): void {
-    const shape = event.angularComponent.getStage();
-    const dragLayer = this.dragLayer().getStage();
-
-    // moving to another layer will improve dragging performance
-    // shape.moveTo(dragLayer);
-
     this.starConfigs = this.starConfigs.map((conf) => {
       if (config.name === undefined || conf.name !== config.name) {
         return conf;
@@ -74,11 +69,11 @@ export class StarExampleComponent implements OnInit {
   }
 
   public handleDragend(
-    event: NgKonvaEventObject<MouseEvent>,
+    event: KonvaEvent<MouseEvent>,
     config: ExtStartConfig,
   ): void {
-    const shape = event.angularComponent.getStage();
-    const layer = this.layer().getStage();
+    const shape = event.angularComponent.getNode();
+    const layer = this.layer().getNode();
 
     shape.moveTo(layer);
 

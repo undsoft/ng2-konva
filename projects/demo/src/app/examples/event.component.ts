@@ -3,9 +3,9 @@ import { StageConfig } from 'konva/lib/Stage';
 import { RegularPolygonConfig } from 'konva/lib/shapes/RegularPolygon';
 import { TextConfig } from 'konva/lib/shapes/Text';
 import {
-  CoreShapeComponent,
-  NgKonvaEventObject,
-  StageComponent,
+  KonvaCoreShape2,
+  KonvaEvent, KonvaLayer,
+  KonvaStage
 } from 'ng2-konva';
 
 @Component({
@@ -25,7 +25,7 @@ import {
       </ko-stage>
     </section>
   `,
-  imports: [StageComponent, CoreShapeComponent],
+  imports: [KonvaStage, KonvaCoreShape2, KonvaLayer]
 })
 export class EventExampleComponent {
   public configStage: Partial<StageConfig> = {
@@ -60,7 +60,7 @@ export class EventExampleComponent {
     this.writeMessage('Mouseout triangle');
   }
 
-  handleMouseMove(event: NgKonvaEventObject<MouseEvent>): void {
+  handleMouseMove(event: KonvaEvent<MouseEvent>): void {
     const mousePos = event.event.target.getRelativePointerPosition();
     if (mousePos === null) return;
     const x = mousePos.x - 190;

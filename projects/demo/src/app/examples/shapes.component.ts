@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CoreShapeComponent, StageComponent } from 'ng2-konva';
+import { KonvaCoreShape2, KonvaStage, KonvaLayer } from 'ng2-konva';
 import { StageConfig } from 'konva/lib/Stage';
 import { Shape, ShapeConfig } from 'konva/lib/Shape';
 import { Context } from 'konva/lib/Context';
@@ -19,7 +19,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
       <br />
     </section>
   `,
-  imports: [StageComponent, CoreShapeComponent],
+  imports: [KonvaStage, KonvaLayer, KonvaCoreShape2],
 })
 export class ShapesExampleComponent {
   sub = timer(0, 1000)

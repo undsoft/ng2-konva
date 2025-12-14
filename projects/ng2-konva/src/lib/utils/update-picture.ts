@@ -3,7 +3,7 @@
 import Konva from 'konva';
 import Node = Konva.Node;
 
-export default function updatePicture(node: Node) {
+export function updatePicture(node: Node): void {
   const drawingNode = node.getLayer() || node.getStage();
   if (drawingNode) {
     drawingNode.batchDraw();

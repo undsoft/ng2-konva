@@ -1,28 +1,12 @@
 import { OutputEmitterRef } from '@angular/core';
-import { KonvaComponent } from '../interfaces/ko-component.interface';
-import applyNodeProps from './applyNodeProps';
-import { ListenerRecord } from './types';
-import updatePicture from './updatePicture';
+import { KonvaComponent } from '../types/konva-component';
 
-function camelize(str: string): string {
-  return str
-    .replace(/^\w|[A-Z]|\b\w/g, function (letter, index) {
-      return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
-    })
-    .replace(/\s+/g, '');
-}
+import { ListenerRecord } from '../types/props-types';
+import { AnyNode } from '../types/supported-nodes';
 
-function capitalizeFirstLetter(string: string): string {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-export function getName(componentTag: string): string {
-  return capitalizeFirstLetter(
-    camelize(componentTag.slice(3).replace('-', ' ')),
-  );
-}
-
-export function createListener(instance: KonvaComponent): ListenerRecord {
+export function createListener<
+  NodeType extends AnyNode = AnyNode,
+>(instance: KonvaComponent<NodeType>): ListenerRecord {
   const output: ListenerRecord = {};
   [
     'mouseover',
@@ -59,5 +43,3 @@ export function createListener(instance: KonvaComponent): ListenerRecord {
   });
   return output;
 }
-
-export { applyNodeProps, updatePicture };

@@ -1,13 +1,16 @@
 // adapted FROM: https://github.com/lavrton/react-konva/blob/master/src/react-konva-fiber.js
 
+import { KonvaComponent } from '../types/konva-component';
+import { KonvaEvent } from '../types/konva-event-object';
+import { AnyNode } from '../types/supported-nodes';
 import { KonvaEventObject } from 'konva/lib/Node';
-import { KonvaComponent } from '../interfaces/ko-component.interface';
-import { NgKonvaEventObject } from '../interfaces/ngKonvaEventObject';
-import { PropsType } from './types';
-import updatePicture from './updatePicture';
+import { Listener, PropsType } from '../types/props-types';
+import { updatePicture } from '../utils/update-picture';
 
-export default function applyNodeProps(
-  component: KonvaComponent,
+export function applyNodeProps<
+  NodeType extends AnyNode = AnyNode,
+>(
+  component: KonvaComponent<NodeType>,
   props: PropsType = {},
   oldProps: PropsType = {},
 ): void {
@@ -16,7 +19,7 @@ export default function applyNodeProps(
     console.warn(message);
   }
 
-  const instance = component.getStage();
+  const instance = component.getNode();
   const updatedProps: PropsType = {};
   let hasUpdates = false;
 
@@ -29,7 +32,7 @@ export default function applyNodeProps(
         eventName =
           'content' + eventName.slice(7, 8).toUpperCase() + eventName.slice(8);
       }
-      instance.off(eventName, oldProps[key]);
+      instance.off(eventName, oldProps[key] as Listener);
     }
     const toRemove = !Object.hasOwn(props, key);
     if (toRemove) {
@@ -48,10 +51,10 @@ export default function applyNodeProps(
       if (props[key]) {
         instance.off(eventName);
         instance.on(eventName, (event: KonvaEventObject<unknown>) => {
-          props[key]({
+          (props[key] as Listener)({
             angularComponent: component,
             event,
-          } as NgKonvaEventObject<unknown>);
+          } as KonvaEvent<unknown>);
         });
       }
     }
