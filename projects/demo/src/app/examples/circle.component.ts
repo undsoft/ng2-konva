@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { StageConfig } from 'konva/lib/Stage';
 import { CircleConfig } from 'konva/lib/shapes/Circle';
 import {
-  CoreShapeComponent,
-  NgKonvaEventObject,
-  StageComponent,
+  KonvaEvent, KonvaLayer,
+  KonvaStage
 } from 'ng2-konva';
+import { KonvaCircle } from 'ng2-konva/circle';
 
 @Component({
   selector: 'app-circle-example',
@@ -23,7 +23,7 @@ import {
       <br />
     </section>
   `,
-  imports: [StageComponent, CoreShapeComponent],
+  imports: [KonvaStage, KonvaLayer, KonvaCircle]
 })
 export class CircleExampleComponent implements OnInit {
   public configStage: Partial<StageConfig> = {
@@ -39,7 +39,7 @@ export class CircleExampleComponent implements OnInit {
     strokeWidth: 4,
   };
 
-  public handleClick(event: NgKonvaEventObject<MouseEvent>): void {
+  public handleClick(event: KonvaEvent<MouseEvent>): void {
     console.log('Hello Circle', event);
   }
 

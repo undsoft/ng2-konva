@@ -14,6 +14,11 @@
     "sourceMap": true,
     "paths": {
       "ng2-konva": ["./projects/ng2-konva/src/public-api.ts"],
+      "ng2-konva/star": ["./projects/ng2-konva/star/star.ts"],
+      "ng2-konva/regular-polygon": ["./projects/ng2-konva/regular-polygon/regular-polygon.ts"],
+      "ng2-konva/circle": ["./projects/ng2-konva/circle/circle.ts"],
+      "ng2-konva/text": ["./projects/ng2-konva/text/text.ts"],
+      "ng2-konva/shape": ["./projects/ng2-konva/shape/shape.ts"],
     },
     "declaration": false,
     "experimentalDecorators": true,

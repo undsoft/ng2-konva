@@ -3,7 +3,8 @@ import { Animation } from 'konva/lib/Animation';
 import { ContainerConfig } from 'konva/lib/Container';
 import { RegularPolygonConfig } from 'konva/lib/shapes/RegularPolygon';
 import { IFrame } from 'konva/lib/types';
-import { CoreShapeComponent, StageComponent } from 'ng2-konva';
+import { KonvaStage, KonvaLayer } from 'ng2-konva';
+import { KonvaRegularPolygon } from 'ng2-konva/regular-polygon';
 
 @Component({
   selector: 'app-animation-example',
@@ -19,12 +20,12 @@ import { CoreShapeComponent, StageComponent } from 'ng2-konva';
       </ko-stage>
     </section>
   `,
-  imports: [StageComponent, CoreShapeComponent],
+  imports: [KonvaStage, KonvaLayer, KonvaRegularPolygon]
 })
 export class AnimationExampleComponent implements AfterViewInit {
-  readonly stage = viewChild.required<StageComponent>('stage');
-  readonly layer = viewChild.required<CoreShapeComponent>('layer');
-  readonly hexagon = viewChild.required<CoreShapeComponent>('hexagon');
+  readonly stage = viewChild.required<KonvaStage>('stage');
+  readonly layer = viewChild.required<KonvaLayer>('layer');
+  readonly hexagon = viewChild.required<KonvaRegularPolygon>('hexagon');
 
   public configStage: ContainerConfig = {
     width: 400,
@@ -44,14 +45,14 @@ export class AnimationExampleComponent implements AfterViewInit {
     const amplitude = 100;
     const period = 5000;
     // in ms
-    const centerX = this.stage().getStage().width() / 2;
+    const centerX = this.stage().getNode().width() / 2;
 
     const anim = new Animation((frame?: IFrame) => {
       if (!frame) return;
       this.hexagon()
-        .getStage()
+        .getNode()
         .x(amplitude * Math.sin((frame.time * 2 * Math.PI) / period) + centerX);
-    }, this.layer().getStage());
+    }, this.layer().getNode());
 
     anim.start();
   }
